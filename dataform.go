@@ -341,7 +341,7 @@ func DataClear(c echo.Context, Model interface{}, action string, id string, rule
 			for key, Value := range formTypes {
 				if Value == "Date" {
 					if (*dataJson)[key] != nil {
-						parsedDate, err := time.Parse("2006-01-02", (*dataJson)[key].(string))
+					/*	parsedDate, err := time.Parse("2006-01-02", (*dataJson)[key].(string))
 
 						if err != nil {
 							parsedDate2, err2 := time.Parse(time.RFC3339, (*dataJson)[key].(string))
@@ -362,7 +362,7 @@ func DataClear(c echo.Context, Model interface{}, action string, id string, rule
 							parsedDate = parsedDate2
 						}
 
-						(*dataJson)[key] = parsedDate
+						(*dataJson)[key] = parsedDate*/
 						delete(rules, key)
 
 					} else {
