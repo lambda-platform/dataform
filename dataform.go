@@ -4,17 +4,15 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"github.com/PaesslerAG/gval"
+	"github.com/araddon/dateparse"
+	agentUtils "github.com/lambda-platform/agent/utils"
 	"github.com/lambda-platform/lambda/DB"
 	"github.com/lambda-platform/lambda/config"
-	agentUtils "github.com/lambda-platform/agent/utils"
-	"github.com/lambda-platform/dataform/models"
 	lbModel "github.com/lambda-platform/lambda/models"
 	"github.com/thedevsaddam/govalidator"
 	"io/ioutil"
 	"regexp"
-	"github.com/PaesslerAG/gval"
-	"github.com/araddon/dateparse"
-	//"github.com/lambda-platform/lambda/tools"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"net/url"
@@ -438,7 +436,7 @@ func DataClear(c echo.Context, Model interface{}, action string, id string, rule
 		formulaString := GetFormulaRes[0].Interface().(string)
 
 		if formulaString != "" {
-			formulas := []models.Formula{}
+			formulas := []lbModel.Formula{}
 			json.Unmarshal([]byte(formulaString), &formulas)
 
 			if len(formulas) >= 1 {
@@ -926,7 +924,7 @@ func GetTableData(query string) []map[string]interface{} {
 func SetCondition(condition string, c echo.Context, VBSchema lbModel.VBSchema) error {
 
 	con, _ := url.ParseQuery(condition)
-	var schema models.SCHEMA
+	var schema lbModel.SCHEMA
 
 	json.Unmarshal([]byte(VBSchema.Schema), &schema)
 
