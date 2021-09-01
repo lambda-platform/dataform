@@ -1,11 +1,13 @@
 package form
 
-import "time"
+import (
+	"github.com/lambda-platform/lambda/DB"
+)
 
 type UserProfile struct {
 	Avatar         string     `gorm:"column:avatar" json:"avatar"`
 	Bio            string     `gorm:"column:bio" json:"bio"`
-	Birthday       time.Time `gorm:"column:birthday" json:"birthday"`
+	Birthday       DB.Date `gorm:"column:birthday" json:"birthday"`
 	Phone       string `gorm:"column:phone" json:"phone"`
 	FirstName      string     `gorm:"column:first_name" json:"first_name"`
 	Gender         string     `gorm:"column:gender" json:"gender"`

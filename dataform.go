@@ -311,26 +311,12 @@ func DataClear(c echo.Context, Model interface{}, action string, id string, rule
 
 	getFromTypes := reflect.ValueOf(Model).MethodByName("GetFromTypes")
 	GetFormula := reflect.ValueOf(Model).MethodByName("GetFormula")
-	GetTableName := reflect.ValueOf(Model).MethodByName("TableName")
-
-	/*
-		ONLY USE MANAIKHOROO
-	*/
-	if GetTableName.IsValid() {
-		getTableRes := GetTableName.Call([]reflect.Value{})
-		tableName := getTableRes[0].Interface().(string)
-
-		if tableName == "zurchil" {
-
-			if (*dataJson)["id"] == nil {
-				if (*dataJson)["user_id"] == nil || (*dataJson)["user_id"] == 0 {
-					User := agentUtils.AuthUserObject(c)
-					(*dataJson)["user_id"] = User["id"]
-				}
-			}
-		}
-
-	}
+	//GetTableName := reflect.ValueOf(Model).MethodByName("TableName")
+	//if GetTableName.IsValid() {
+	//	getTableRes := GetTableName.Call([]reflect.Value{})
+	//	tableName := getTableRes[0].Interface().(string)
+	//
+	//}
 
 	if getFromTypes.IsValid() {
 		getFromTypesRes := getFromTypes.Call([]reflect.Value{})
@@ -429,7 +415,11 @@ func DataClear(c echo.Context, Model interface{}, action string, id string, rule
 		*dataJson = callTrigger("beforeUpdate", Model, *dataJson, id)
 	}
 	data, _ := json.Marshal(dataJson)
-	json.Unmarshal(data, Model)
+	err := json.Unmarshal(data, Model)
+
+	if(err!= nil){
+		fmt.Println(err)
+	}
 
 	if GetFormula.IsValid() {
 		GetFormulaRes := GetFormula.Call([]reflect.Value{})
